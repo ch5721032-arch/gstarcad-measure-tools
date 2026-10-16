@@ -1,0 +1,17 @@
+;; quick-dist.lsp - Keep measuring and accumulate the total distance
+;; Command: QDIST
+(defun c:QDIST ( / p1 p2 d total n )
+  (setq total 0.0 n 0)
+  (setq p1 (getpoint "\nFirst point: "))
+  (while (and p1 (setq p2 (getpoint p1 "\nNext point (Enter to stop): ")))
+    (setq d (distance p1 p2))
+    (setq total (+ total d))
+    (setq n (1+ n))
+    (princ (strcat "\nSegment: " (rtos d 2 4) "   Running total: " (rtos total 2 4)))
+    (setq p1 p2)
+  )
+  (if (> n 0)
+    (princ (strcat "\nSegments: " (itoa n) "  Total distance: " (rtos total 2 4)))
+  )
+  (princ)
+)
